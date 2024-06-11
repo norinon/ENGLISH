@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson1-1後半</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            text-align: center;
+        }
+        .quiz-container {
+            margin: auto;
+            width: 50%;
+            padding: 20px;
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            box-shadow: 2px 2px 12px #aaa;
+            border-radius: 10px;
+        }
+        .question {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+        .choices {
+            list-style-type: none;
+            padding: 0;
+        }
+        .choices li {
+            margin: 10px 0;
+            background-color: #e0e0e0;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .choices li:hover {
+            background-color: #d0d0d0;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        #result {
+            font-size: 1.5em;
+            margin-top: 20px;
+        }
+        #progress {
+            height: 20px;
+            background-color: #f3f3f3;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        #progress-bar {
+            height: 100%;
+            width: 0;
+            background-color: #4caf50;
+            text-align: center;
+            line-height: 20px;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>Lesson1-1後半</h1>
+        <div id="progress">
+            <div id="progress-bar"></div>
+        </div>
+        <div id="quiz">
+            <div class="question"></div>
+            <ul class="choices"></ul>
+            <button onclick="nextQuestion()">Next</button>
+        </div>
+        <div id="result"></div>
+    </div>
+    <script>
+        const quizData = [
+            { question: "What does 'meet' mean?", choices: ["会う", "食べる", "読む", "書く"], correct: 0 },
+            { question: "What does 'music' mean?", choices: ["音楽", "映画", "本", "絵"], correct: 0 },
+            { question: "What does 'my' mean?", choices: ["私の", "あなたの", "彼の", "彼女の"], correct: 0 },
+            { question: "What does 'name' mean?", choices: ["名前", "年齢", "住所", "職業"], correct: 0 },
+            { question: "What does 'new' mean?", choices: ["新しい", "古い", "小さい", "大きい"], correct: 0 },
+            { question: "What does 'nice' mean?", choices: ["素敵な", "怖い", "悪い", "遅い"], correct: 0 },
+            { question: "What does 'Nice to meet you' mean?", choices: ["初めまして", "さようなら", "おはよう", "こんにちは"], correct: 0 },
+            { question: "What does 'oh' mean?", choices: ["ああ", "いいえ", "はい", "こんにちは"], correct: 0 },
+            { question: "What does 'piano' mean?", choices: ["ピアノ", "ギター", "ドラム", "バイオリン"], correct: 0 },
+            { question: "What does 'play' mean?", choices: ["遊ぶ", "読む", "書く", "話す"], correct: 0 },
+            { question: "What does 'please' mean?", choices: ["お願いします", "ありがとう", "すみません", "さようなら"], correct: 0 },
+            { question: "What does 'Please call me ～' mean?", choices: ["～と呼んでください", "～をください", "～に行ってください", "～を見てください"], correct: 0 },
+            { question: "What does 'Robert West' mean?", choices: ["人名", "地名", "職業", "動物"], correct: 0 },
+            { question: "What does 'science' mean?", choices: ["科学", "数学", "歴史", "地理"], correct: 0 },
+            { question: "What does 'subject' mean?", choices: ["教科", "学校", "授業", "休み"], correct: 0 },
+            { question: "What does 'that' mean?", choices: ["それ", "これ", "あれ", "どれ"], correct: 0 },
+            { question: "What does 'that's' mean?", choices: ["それは～です", "これは～です", "あれは～です", "どれは～です"], correct: 0 },
+            { question: "What does 'the' mean?", choices: ["その", "あの", "この", "どの"], correct: 0 },
+            { question: "What does 'too' mean?", choices: ["～も", "～だけ", "～しか", "～でも"], correct: 0 },
+            { question: "What does 'you' mean?", choices: ["あなた", "私", "彼", "彼女"], correct: 0 }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+        let correctStreak = 0;
+
+        function loadQuestion() {
+            const quiz = document.getElementById('quiz');
+            const question = quizData[currentQuestion];
+            quiz.querySelector('.question').innerHTML = question.question;
+            const choicesList = quiz.querySelector('.choices');
+            choicesList.innerHTML = '';
+            question.choices.forEach((choice, index) => {
+                const li = document.createElement('li');
+                li.innerHTML = choice;
+                li.onclick = () => selectAnswer(index);
+                choicesList.appendChild(li);
+            });
+            updateProgressBar();
+        }
+
+        function selectAnswer(index) {
+            const question = quizData[currentQuestion];
+            if (index === question.correct) {
+                score++;
+                correctStreak++;
+                alert('Correct! ✔️');
+            } else {
+                correctStreak = 0;
+                alert('Wrong! ❌');
+            }
+            nextQuestion();
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            if (currentQuestion < quizData.length) {
+                loadQuestion();
+            } else {
+                document.getElementById('quiz').style.display = 'none';
+                document.getElementById('result').innerHTML = `You scored ${score} out of ${quizData.length}!<br>Correct streak: ${correctStreak}`;
+            }
+        }
+
+        function updateProgressBar() {
+            const progressBar = document.getElementById('progress-bar');
+            const progress = ((currentQuestion + 1) / quizData.length) * 100;
+            progressBar.style.width = progress + '%';
+            progressBar.innerHTML = `${Math.round(progress)}%`;
+        }
+
+        loadQuestion();
+    </script>
+</body>
+</html>
