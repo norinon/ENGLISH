@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Vocabulary Quiz - Lesson 1-1</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            text-align: center;
+        }
+        .quiz-container {
+            margin: auto;
+            width: 50%;
+            padding: 20px;
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            box-shadow: 2px 2px 12px #aaa;
+            border-radius: 10px;
+        }
+        .question {
+            font-size: 1.2em;
+        }
+        .choices {
+            list-style-type: none;
+            padding: 0;
+        }
+        .choices li {
+            margin: 10px 0;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+        }
+        #result {
+            font-size: 1.5em;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>English Vocabulary Quiz - Lesson 1-1</h1>
+        <div id="quiz">
+            <div class="question"></div>
+            <ul class="choices"></ul>
+            <button onclick="nextQuestion()">Next</button>
+        </div>
+        <div id="result"></div>
+    </div>
+    <script>
+        const quizData = [
+            { question: "What does 'service dog' mean?", choices: ["盲導犬", "警察犬", "サービスドッグ", "牧羊犬"], correct: 2 },
+            { question: "What does 'guide dog' mean?", choices: ["警察犬", "盲導犬", "牧羊犬", "サービスドッグ"], correct: 1 },
+            { question: "What does 'harness' mean?", choices: ["ハーネス", "リード", "首輪", "ベスト"], correct: 0 },
+            { question: "What does 'blind' mean?", choices: ["耳が不自由な", "目が不自由な", "足が不自由な", "手が不自由な"], correct: 1 },
+            { question: "What does 'message' mean?", choices: ["メッセージ", "サイン", "ノート", "記号"], correct: 0 },
+            { question: "What does 'corner' mean?", choices: ["障害物", "角", "信号", "道"], correct: 1 },
+            { question: "What does 'obstacle' mean?", choices: ["角", "信号", "障害物", "道"], correct: 2 },
+            { question: "What does 'wear' mean?", choices: ["持つ", "着る", "見る", "聞く"], correct: 1 },
+            { question: "What does 'stop' mean?", choices: ["進む", "止まる", "曲がる", "持つ"], correct: 1 },
+            { question: "What does 'go' mean?", choices: ["来る", "止まる", "行く", "持つ"], correct: 2 }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+
+        function loadQuestion() {
+            const quiz = document.getElementById('quiz');
+            const question = quizData[currentQuestion];
+            quiz.querySelector('.question').innerHTML = question.question;
+            const choicesList = quiz.querySelector('.choices');
+            choicesList.innerHTML = '';
+            question.choices.forEach((choice, index) => {
+                const li = document.createElement('li');
+                li.innerHTML = `<input type="radio" name="choice" value="${index}"> ${choice}`;
+                choicesList.appendChild(li);
+            });
+        }
+
+        function nextQuestion() {
+            const selected = document.querySelector('input[name="choice"]:checked');
+            if (selected) {
+                if (parseInt(selected.value) === quizData[currentQuestion].correct) {
+                    score++;
+                }
+                currentQuestion++;
+                if (currentQuestion < quizData.length) {
+                    loadQuestion();
+                } else {
+                    document.getElementById('quiz').style.display = 'none';
+                    document.getElementById('result').innerHTML = `You scored ${score} out of ${quizData.length}!`;
+                }
+            } else {
+                alert('Please select an answer!');
+            }
+        }
+
+        loadQuestion();
+    </script>
+</body>
+</html>
