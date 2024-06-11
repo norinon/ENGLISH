@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>英単語小テスト - Lesson1-1</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        #quiz-container {
+            margin: 20px 0;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>中学一年生向け英単語小テスト - Lesson1-1</h1>
+        <div id="quiz-container">
+            <!-- クイズの問題がここに表示される -->
+        </div>
+        <button id="next-button" onclick="nextQuestion()">次へ</button>
+    </div>
+    <script>
+        const questions = [
+            "call", "favorite", "friend", "great", "hello", "I", "I'm", "is", "like", "me",
+            "meet", "music", "my", "name", "new", "nice", "Nice to meet you.", "oh",
+            "piano", "play", "please", "Please call me ～.", "Robert West", "science",
+            "subject", "that", "that's", "the", "too", "you"
+        ];
+
+        let currentQuestionIndex = 0;
+
+        function showQuestion() {
+            const quizContainer = document.getElementById('quiz-container');
+            quizContainer.innerHTML = `<p>${questions[currentQuestionIndex]}</p>`;
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < questions.length) {
+                showQuestion();
+            } else {
+                const quizContainer = document.getElementById('quiz-container');
+                quizContainer.innerHTML = "<p>お疲れ様でした！全ての問題が終了しました。</p>";
+                document.getElementById('next-button').style.display = 'none';
+            }
+        }
+
+        // 最初の質問を表示
+        showQuestion();
+    </script>
+</body>
+</html>
