@@ -9,6 +9,7 @@
             font-family: Arial, sans-serif;
             background-color: #f0f8ff;
             text-align: center;
+            font-size: 1.2em; /* 文字サイズを大きく設定 */
         }
         .quiz-container {
             margin: auto;
@@ -20,7 +21,7 @@
             border-radius: 10px;
         }
         .question {
-            font-size: 1.2em;
+            font-size: 1.5em;
             margin-bottom: 20px;
         }
         .choices {
@@ -66,6 +67,12 @@
             font-size: 1.2em;
             color: green;
         }
+        .correct-answer {
+            color: green;
+        }
+        .incorrect-answer {
+            color: red;
+        }
     </style>
 </head>
 <body>
@@ -101,18 +108,18 @@
             { question: "What does 'new' mean?", choices: ["新しい", "古い", "大きい", "小さい"], correct: 0 },
             { question: "What does 'nice' mean?", choices: ["素敵な", "悪い", "普通の", "変な"], correct: 0 },
             { question: "What does 'Nice to meet you.' mean?", choices: ["はじめまして", "こんにちは", "さようなら", "ありがとう"], correct: 0 },
-            { question: "What does 'oh' mean?", choices: ["ああ", "いいえ", "はい", "ううん"], correct: 0 },
+            { question: "What does 'oh' mean?", choices: ["おお", "ああ", "うわ", "わお"], correct: 0 },
             { question: "What does 'piano' mean?", choices: ["ピアノ", "ギター", "ドラム", "バイオリン"], correct: 0 },
-            { question: "What does 'play' mean?", choices: ["遊ぶ", "読む", "書く", "見る"], correct: 0 },
-            { question: "What does 'please' mean?", choices: ["どうぞ", "ありがとう", "さようなら", "おはよう"], correct: 0 },
-            { question: "What does 'Please call me ～.' mean?", choices: ["～と呼んでください", "～に電話してください", "～に会ってください", "～に聞いてください"], correct: 0 },
-            { question: "What does 'Robert West' mean?", choices: ["ロバート・ウェスト", "ジョン・スミス", "マイケル・ジョンソン", "ジェームズ・ブラウン"], correct: 0 },
-            { question: "What does 'science' mean?", choices: ["科学", "数学", "歴史", "地理"], correct: 0 },
-            { question: "What does 'subject' mean?", choices: ["科目", "時間", "場所", "人"], correct: 0 },
-            { question: "What does 'that' mean?", choices: ["あれ", "これ", "それ", "どれ"], correct: 0 },
+            { question: "What does 'play' mean?", choices: ["遊ぶ", "働く", "勉強する", "食べる"], correct: 0 },
+            { question: "What does 'please' mean?", choices: ["お願いします", "ありがとう", "すみません", "どういたしまして"], correct: 0 },
+            { question: "What does 'Please call me ~.' mean?", choices: ["～と呼んでください", "～を呼んでください", "～を見てください", "～を聞いてください"], correct: 0 },
+            { question: "Who is 'Robert West'?", choices: ["ロバート・ウエスト", "ジョン・スミス", "マイケル・ジョーダン", "ウィリアム・シェイクスピア"], correct: 0 },
+            { question: "What does 'science' mean?", choices: ["科学", "文学", "歴史", "地理"], correct: 0 },
+            { question: "What does 'subject' mean?", choices: ["科目", "対象", "主題", "話題"], correct: 0 },
+            { question: "What does 'that' mean?", choices: ["それ", "これ", "あれ", "どれ"], correct: 0 },
             { question: "What does 'that's' mean?", choices: ["それは～です", "これは～です", "あれは～です", "どれは～です"], correct: 0 },
-            { question: "What does 'the' mean?", choices: ["その", "この", "あの", "どの"], correct: 0 },
-            { question: "What does 'too' mean?", choices: ["も", "また", "さらに", "まだ"], correct: 0 },
+            { question: "What does 'the' mean?", choices: ["その", "これ", "あれ", "どれ"], correct: 0 },
+            { question: "What does 'too' mean?", choices: ["～も", "～だけ", "～は", "～に"], correct: 0 },
             { question: "What does 'you' mean?", choices: ["あなた", "私", "彼", "彼女"], correct: 0 }
         ];
 
@@ -137,15 +144,16 @@
 
         function selectAnswer(index) {
             const question = quizData[currentQuestion];
+            const resultElement = document.getElementById('result');
             if (index === question.correct) {
                 score++;
                 streak++;
-                alert('Correct! ⭕️');
+                resultElement.innerHTML = '<span class="correct-answer">Correct! &nbsp;⭕️</span>';
             } else {
                 streak = 0;
-                alert('Wrong!');
+                resultElement.innerHTML = '<span class="incorrect-answer">Wrong! &nbsp;❌</span>';
             }
-            updateStreak();
+            document.getElementById('streak').innerHTML = `Current Streak: ${streak}`;
             nextQuestion();
         }
 
@@ -154,11 +162,4 @@
             if (currentQuestion < quizData.length) {
                 loadQuestion();
             } else {
-                document.getElementById('quiz').style.display = 'none';
-                document.getElementById('result').innerHTML = `You scored ${score} out of ${quizData.length}!`;
-            }
-        }
-
-        function updateProgressBar() {
-            const progressBar = document.getElementById('progress-bar');
-            const progress = ((current
+                document.get
