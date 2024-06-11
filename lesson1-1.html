@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enhanced English Vocabulary Quiz</title>
+    <title>Lesson1-1</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -62,11 +62,15 @@
             line-height: 20px;
             color: white;
         }
+        #streak {
+            font-size: 1.2em;
+            color: green;
+        }
     </style>
 </head>
 <body>
     <div class="quiz-container">
-        <h1>Enhanced English Vocabulary Quiz</h1>
+        <h1>Lesson1-1</h1>
         <div id="progress">
             <div id="progress-bar"></div>
         </div>
@@ -76,6 +80,7 @@
             <button onclick="nextQuestion()">Next</button>
         </div>
         <div id="result"></div>
+        <div id="streak"></div>
     </div>
     <script>
         const quizData = [
@@ -113,6 +118,7 @@
 
         let currentQuestion = 0;
         let score = 0;
+        let streak = 0;
 
         function loadQuestion() {
             const quiz = document.getElementById('quiz');
@@ -133,10 +139,13 @@
             const question = quizData[currentQuestion];
             if (index === question.correct) {
                 score++;
-                alert('Correct!');
+                streak++;
+                alert('Correct! ⭕️');
             } else {
+                streak = 0;
                 alert('Wrong!');
             }
+            updateStreak();
             nextQuestion();
         }
 
@@ -154,10 +163,4 @@
             const progressBar = document.getElementById('progress-bar');
             const progress = ((currentQuestion + 1) / quizData.length) * 100;
             progressBar.style.width = progress + '%';
-            progressBar.innerHTML = `${Math.round(progress)}%`;
-        }
-
-        loadQuestion();
-    </script>
-</body>
-</html>
+           
