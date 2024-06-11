@@ -158,4 +158,5 @@
         function updateProgressBar() {
             const progressBar = document.getElementById('progress-bar');
             const progress = ((currentQuestion + 1) / quizData.length) * 100;
-            progressBar.style.width = progress + '%
+            progressBar.style.width = progress + '%';
+            progressBar.innerHTML = progress.toFixed(0) +
