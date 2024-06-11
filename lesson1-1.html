@@ -9,11 +9,14 @@
             font-family: Arial, sans-serif;
             background-color: #f0f8ff;
             text-align: center;
-            font-size: 1.2em; /* 文字サイズを大きく設定 */
+            font-size: 1.2em;
+            padding: 0;
+            margin: 0;
         }
         .quiz-container {
             margin: auto;
-            width: 50%;
+            width: 80%;
+            max-width: 600px;
             padding: 20px;
             background-color: #ffffff;
             border: 1px solid #ddd;
@@ -34,6 +37,7 @@
             padding: 10px;
             border-radius: 5px;
             cursor: pointer;
+            transition: background-color 0.3s;
         }
         .choices li:hover {
             background-color: #d0d0d0;
@@ -43,6 +47,14 @@
             font-size: 1em;
             cursor: pointer;
             margin-top: 20px;
+            border: none;
+            background-color: #4caf50;
+            color: white;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #45a049;
         }
         #result {
             font-size: 1.5em;
@@ -100,27 +112,7 @@
             { question: "What does 'I'm' mean?", choices: ["私は～です", "あなたは～です", "彼は～です", "彼女は～です"], correct: 0 },
             { question: "What does 'is' mean?", choices: ["～です", "～します", "～あります", "～なります"], correct: 0 },
             { question: "What does 'like' mean?", choices: ["好き", "嫌い", "愛してる", "必要"], correct: 0 },
-            { question: "What does 'me' mean?", choices: ["私を", "あなたを", "彼を", "彼女を"], correct: 0 },
-            { question: "What does 'meet' mean?", choices: ["会う", "聞く", "話す", "見る"], correct: 0 },
-            { question: "What does 'music' mean?", choices: ["音楽", "絵", "映画", "本"], correct: 0 },
-            { question: "What does 'my' mean?", choices: ["私の", "あなたの", "彼の", "彼女の"], correct: 0 },
-            { question: "What does 'name' mean?", choices: ["名前", "場所", "年齢", "性別"], correct: 0 },
-            { question: "What does 'new' mean?", choices: ["新しい", "古い", "大きい", "小さい"], correct: 0 },
-            { question: "What does 'nice' mean?", choices: ["素敵な", "悪い", "普通の", "変な"], correct: 0 },
-            { question: "What does 'Nice to meet you.' mean?", choices: ["はじめまして", "こんにちは", "さようなら", "ありがとう"], correct: 0 },
-            { question: "What does 'oh' mean?", choices: ["おお", "ああ", "うわ", "わお"], correct: 0 },
-            { question: "What does 'piano' mean?", choices: ["ピアノ", "ギター", "ドラム", "バイオリン"], correct: 0 },
-            { question: "What does 'play' mean?", choices: ["遊ぶ", "働く", "勉強する", "食べる"], correct: 0 },
-            { question: "What does 'please' mean?", choices: ["お願いします", "ありがとう", "すみません", "どういたしまして"], correct: 0 },
-            { question: "What does 'Please call me ~.' mean?", choices: ["～と呼んでください", "～を呼んでください", "～を見てください", "～を聞いてください"], correct: 0 },
-            { question: "Who is 'Robert West'?", choices: ["ロバート・ウエスト", "ジョン・スミス", "マイケル・ジョーダン", "ウィリアム・シェイクスピア"], correct: 0 },
-            { question: "What does 'science' mean?", choices: ["科学", "文学", "歴史", "地理"], correct: 0 },
-            { question: "What does 'subject' mean?", choices: ["科目", "対象", "主題", "話題"], correct: 0 },
-            { question: "What does 'that' mean?", choices: ["それ", "これ", "あれ", "どれ"], correct: 0 },
-            { question: "What does 'that's' mean?", choices: ["それは～です", "これは～です", "あれは～です", "どれは～です"], correct: 0 },
-            { question: "What does 'the' mean?", choices: ["その", "これ", "あれ", "どれ"], correct: 0 },
-            { question: "What does 'too' mean?", choices: ["～も", "～だけ", "～は", "～に"], correct: 0 },
-            { question: "What does 'you' mean?", choices: ["あなた", "私", "彼", "彼女"], correct: 0 }
+            { question: "What does 'me' mean?", choices: ["私を", "あなたを", "彼を", "彼女を"], correct: 0 }
         ];
 
         let currentQuestion = 0;
@@ -154,7 +146,6 @@
                 resultElement.innerHTML = '<span class="incorrect-answer">Wrong! &nbsp;❌</span>';
             }
             document.getElementById('streak').innerHTML = `Current Streak: ${streak}`;
-            nextQuestion();
         }
 
         function nextQuestion() {
@@ -162,4 +153,19 @@
             if (currentQuestion < quizData.length) {
                 loadQuestion();
             } else {
-                document.get
+                document.getElementById('quiz').style.display = 'none';
+                document.getElementById('result').innerHTML = `You scored ${score} out of ${quizData.length}!`;
+            }
+        }
+
+        function updateProgressBar() {
+            const progressBar = document.getElementById('progress-bar');
+            const progress = ((currentQuestion + 1) / quizData.length) * 100;
+            progressBar.style.width = progress + '%';
+            progressBar.innerHTML = `${Math.round(progress)}%`;
+        }
+
+        loadQuestion();
+    </script>
+</body>
+</html>
