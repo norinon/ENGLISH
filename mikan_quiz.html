@@ -160,3 +160,11 @@
             const progress = ((currentQuestion + 1) / quizData.length) * 100;
             progressBar.style.width = progress + '%';
             progressBar.innerHTML = progress.to
+            progressBar.innerHTML = progress.toFixed(0) + '%';
+        }
+
+        // 初期の質問を読み込む
+        loadQuestion();
+    </script>
+</body>
+</html>
